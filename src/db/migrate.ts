@@ -4,6 +4,15 @@ import { migrate } from "drizzle-orm/postgres-js/migrator";
 import { env } from "../env";
 import chalk from "chalk";
 
+/**
+ * Script de migrations para Drizzle + PostgresJS.
+ *
+ * Observações:
+ * - `max: 1` evita problemas de conexões múltiplas simultâneas durante execuções de migrator.
+ * - Não deixe `process.exit` sem encerrar a conexão; aqui encerramos antes de `process.exit`.
+ * - Use `top-level await` (arquivo em ES Module / target ESNext) para simplicidade.
+ *
+ */
 const connection = postgres(env.DATABASE_URL, { max: 1 });
 const db = drizzle(connection)
 
