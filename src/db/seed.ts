@@ -1,7 +1,7 @@
-import { faker } from "@faker-js/faker";
-import { usersTable, restaurantsTable } from "./schema";
-import { db } from "./connection";
-import chalk from "chalk";
+import { faker } from '@faker-js/faker'
+import { usersTable, restaurantsTable } from './schema'
+import { db } from './connection'
+import chalk from 'chalk'
 
 /**
  * Script de seed para popular o banco com dados fictícios.
@@ -22,10 +22,10 @@ import chalk from "chalk";
  * Reset database (idempotente para desenvolvimento):
  * - Executa deletes em ordem controlada para evitar violação de FK.
  */
-await db.delete(usersTable);
-await db.delete(restaurantsTable);
+await db.delete(usersTable)
+await db.delete(restaurantsTable)
 
-console.log(chalk.yellow("Database reset successfully"));
+console.log(chalk.yellow('Database reset successfully'))
 
 /**
  * Create customers (clientes).
@@ -36,36 +36,38 @@ await db.insert(usersTable).values([
     name: faker.person.fullName(),
     email: faker.internet.email(),
     phone: faker.phone.number(),
-    role: "costumer",
+    role: 'costumer',
   },
   {
     name: faker.person.fullName(),
     email: faker.internet.email(),
     phone: faker.phone.number(),
-    role: "costumer",
+    role: 'costumer',
   },
-]);
+])
 
-console.log(chalk.green("Customers created successfully"));
+console.log(chalk.green('Customers created successfully'))
 
 /**
  * Create manager:
  * - Inserimos um manager com e-mail fixo (ex: admin@manager.com) para testes de login.
  * - Usamos `.returning({ id: usersTable.id })` para obter o id inserido.
  * - Drizzle retorna um array, por isso usar desestruturação.
- * 
+ *
  */
-const [ manager ] = await db.insert(usersTable).values([
-  {
-    name: faker.person.fullName(),
-    email: "admin@manager.com",
-    phone: faker.phone.number(),
-    role: "manager",
-  }
-]).returning({ id: usersTable.id });
+const [manager] = await db
+  .insert(usersTable)
+  .values([
+    {
+      name: faker.person.fullName(),
+      email: 'admin@manager.com',
+      phone: faker.phone.number(),
+      role: 'manager',
+    },
+  ])
+  .returning({ id: usersTable.id })
 
-console.log(chalk.green("Manager created successfully"));
-
+console.log(chalk.green('Manager created successfully'))
 
 /**
  * Create restaurant:
@@ -77,11 +79,11 @@ await db.insert(restaurantsTable).values([
     name: faker.company.name(),
     description: faker.lorem.paragraph(),
     managerId: manager?.id,
-  }
-]);
+  },
+])
 
-console.log(chalk.green("Restaurant created successfully"));
+console.log(chalk.green('Restaurant created successfully'))
 
-console.log(chalk.greenBright("Database seeded successfully"));
+console.log(chalk.greenBright('Database seeded successfully'))
 
-process.exit(0);
+process.exit(0)

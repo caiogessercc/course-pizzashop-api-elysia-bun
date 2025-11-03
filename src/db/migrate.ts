@@ -1,8 +1,8 @@
-import postgres from "postgres";
-import { drizzle } from "drizzle-orm/postgres-js";
-import { migrate } from "drizzle-orm/postgres-js/migrator";
-import { env } from "../env";
-import chalk from "chalk";
+import postgres from 'postgres'
+import { drizzle } from 'drizzle-orm/postgres-js'
+import { migrate } from 'drizzle-orm/postgres-js/migrator'
+import { env } from '../env'
+import chalk from 'chalk'
 
 /**
  * Script de migrations para Drizzle + PostgresJS.
@@ -13,15 +13,15 @@ import chalk from "chalk";
  * - Use `top-level await` (arquivo em ES Module / target ESNext) para simplicidade.
  *
  */
-const connection = postgres(env.DATABASE_URL, { max: 1 });
+const connection = postgres(env.DATABASE_URL, { max: 1 })
 const db = drizzle(connection)
 
-await migrate(db, { migrationsFolder: "drizzle" });
+await migrate(db, { migrationsFolder: 'drizzle' })
 
-console.log(chalk.green("Migrations applied successfully"));
+console.log(chalk.green('Migrations applied successfully'))
 
-await connection.end();
+await connection.end()
 
-console.log(chalk.gray("Connection closed"));
+console.log(chalk.gray('Connection closed'))
 
-process.exit(0);
+process.exit(0)
