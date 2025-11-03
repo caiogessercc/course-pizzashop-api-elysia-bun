@@ -1,4 +1,4 @@
-import { Elysia } from "elysia";
+import { Elysia, t } from "elysia";
 import { db } from "../db/connection";
 import { usersTable, restaurantsTable } from "../db/schema";
 
@@ -34,12 +34,12 @@ app.get("/", () => "Hello World");
  * @returns {void} - Resposta sem corpo (204) em sucesso.
  */
 app.post("/restaurants", async ({ body, set }) => {
-  const { restaurantName, name, email, phone } = body as any;
+  const { restaurantName, managerName, email, phone } = body
 
   const [manager] = await db
     .insert(usersTable)
     .values({
-      name,
+      name: managerName,
       email,
       phone,
       role: "manager",
@@ -52,6 +52,22 @@ app.post("/restaurants", async ({ body, set }) => {
   });
 
   set.status = 204;
+},
+{
+  /**
+     * Schema de validação do corpo (body) usando TypeBox.
+     *
+     * - `t.String()` → campo obrigatório do tipo string.
+     * - `t.String({ format: 'email' })` → valida formato de e-mail.
+     * - Se algum campo estiver ausente ou inválido, o Elysia retorna
+     *   HTTP 400 automaticamente com mensagem descritiva.
+     */
+  body: t.Object({
+    restaurantName: t.String(),
+    managerName: t.String(),
+    email: t.String({format: 'email'}),
+    phone: t.String(),
+  }),
 });
 
 /**
