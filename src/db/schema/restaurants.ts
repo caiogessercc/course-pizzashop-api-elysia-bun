@@ -1,7 +1,7 @@
-import { text, pgTable, timestamp } from "drizzle-orm/pg-core";
-import { createId } from "@paralleldrive/cuid2";
-import { usersTable } from "./users";
-import { relations } from "drizzle-orm";
+import { text, pgTable, timestamp } from 'drizzle-orm/pg-core'
+import { createId } from '@paralleldrive/cuid2'
+import { usersTable } from './users'
+import { relations } from 'drizzle-orm'
 
 /**
  * Definição da tabela `restaurants`.
@@ -17,16 +17,18 @@ import { relations } from "drizzle-orm";
  * Boas práticas citadas no curso: evitar cascades descontrolados; escolher
  * cascades apenas onde o domínio exigir.
  */
-export const restaurantsTable = pgTable("restaurants", {
-  id: text("id").$defaultFn(() => createId()).primaryKey(),
-  name: text("name").notNull(),
-  description: text("description"),
-  managerId: text("manager_id").references(() => usersTable.id, {
-    onDelete: "set null"
+export const restaurantsTable = pgTable('restaurants', {
+  id: text('id')
+    .$defaultFn(() => createId())
+    .primaryKey(),
+  name: text('name').notNull(),
+  description: text('description'),
+  managerId: text('manager_id').references(() => usersTable.id, {
+    onDelete: 'set null',
   }),
-  createdAt: timestamp("created_at").notNull().defaultNow(),
-  updatedAt: timestamp("updated_at").notNull().defaultNow(),
-});
+  createdAt: timestamp('created_at').notNull().defaultNow(),
+  updatedAt: timestamp('updated_at').notNull().defaultNow(),
+})
 
 /**
  * Relations para Drizzle.
@@ -44,7 +46,7 @@ export const restaurantRelations = relations(restaurantsTable, ({ one }) => {
     manager: one(usersTable, {
       fields: [restaurantsTable.managerId],
       references: [usersTable.id],
-      relationName: "restaurant_manager",
+      relationName: 'restaurant_manager',
     }),
   }
-});
+})
