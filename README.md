@@ -1,6 +1,6 @@
 # course-pizzashop-api-elysia-bun
 
-> API desenvolvida durante o curso **API com Bun** da Rocketseat, utilizando **Bun**, **Elysia** e **Drizzle ORM**.
+> API em desenvolvimento - Curso **API com Bun** da Rocketseat, utilizando **Bun**, **Elysia** e **Drizzle ORM**.
 
 ---
 
