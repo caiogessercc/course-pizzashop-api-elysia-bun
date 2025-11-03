@@ -1,3 +1,5 @@
+/* eslint-disable drizzle/enforce-delete-with-where */
+
 import { faker } from '@faker-js/faker'
 import { usersTable, restaurantsTable } from './schema'
 import { db } from './connection'
