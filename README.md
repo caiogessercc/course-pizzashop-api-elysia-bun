@@ -49,7 +49,5 @@ bun install
 
 ---
 
-## Licença
-
 Este projeto é apenas para fins educacionais, baseado no conteúdo da Rocketseat.  
-Todo o código é de autoria própria para fins de estudo e prática.
+Todo o código é para fins de estudo e prática.
